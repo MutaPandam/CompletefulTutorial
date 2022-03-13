@@ -10,18 +10,25 @@ namespace MvcMovie.Controllers
         // default Hello World action
         // called when no index is provided
         // GET: /HelloWorld/
-        public string Index()
+        public IActionResult Index()
         {
-            return "This is the Index/default action.";
+            // return the controller's view so it looks nice.
+            return View();
         }
 
         // Welcome action
         // Is passed name and numTimes via the URL
         // Ex: https://localhost:{PORT}/HelloWorld/Welcome?name=Rick&numtimes=4
         // GET: /HelloWorld/Welcome/ 
-        public string Welcome(string name, int ID = 1)
+        public IActionResult Welcome(string name, int numTimes = 1)
         {
-            return HtmlEncoder.Default.Encode($"Hello {name}, ID: {ID}");
+            // ViewData is a database that has no defined properties until added to.
+            // These two lines are accepting the parameters, then adding them to the database to be accessed in the view
+            ViewData["Messages"] = "Hello " + name;
+            ViewData["NumTimes"] = numTimes;
+
+            // return the view.
+            return View();
         }
     }
 }
